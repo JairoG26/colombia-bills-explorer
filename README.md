@@ -57,3 +57,4 @@ En Windows:
 
     python main.py
 
+## Parte 2: API REST con FastAPI
