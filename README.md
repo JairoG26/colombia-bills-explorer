@@ -1,21 +1,8 @@
 # colombia-bills-explorer
 
-
 ## Parte 1: Configuración inicial, creación de la base de datos y carga de datos
 
 Este parte implementa un pipeline **ETL (Extract, Transform, Load)** en Python para cargar y normalizar información de proyectos de ley de Colombia en una base de datos **PostgreSQL**.  
-
-### Estructura del proyecto
-
-ETL/
-│── db/
-│ └── schema.sql # Definición de las tablas en PostgreSQL
-│── extraction.py # Lectura de los datos (CSV, JSON, etc.)
-│── transformation.py # Normalización y transformación
-│── loading.py # Carga a PostgreSQL
-│── main.py # Orquestador: corre el pipeline completo
-│── notebooks/
-│ └── scrapting.ipynb # Notebook que muestra una manera de obtener todos los registros de la página
 
 ### Requisitos previos
 
@@ -42,13 +29,31 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado:
 
 4. Ejecuta el script con el botón ▶️ o presiona F5.
 
-### 3. Crear entorno virtual
+### 3. Cargar datos
 
 1. Crear un entorno virtual (recomendado):
 
-   En Windows (PowerShell):
-   ```powershell
-   python -m venv venv
-   .\venv\Scripts\Activate
+En Windows (PowerShell):
 
+    python -m venv venv
+    .\venv\Scripts\Activate
+
+2. instalar dependencias:
+
+En Windows:
+
+    pip install -r requirements.txt
+
+3. Configurar las variables de conexión en un archivo .env en la raíz del proyecto:
+
+En el archivo .env
+
+    DB_URI = "postgresql://username:password@host:port/database-name"
+    BASE_URL = "https://www.camara.gov.co/secretaria/proyectos-de-ley#menu"
+
+4. Ejecutar el script principal para cargar datos:
+
+En Windows:
+
+    python main.py
 
