@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import api from '../api';
+import api from '../../api';
 import List from './list';
 import Details from './detail/detailProjects';
 import Toolbar from './toolbar';

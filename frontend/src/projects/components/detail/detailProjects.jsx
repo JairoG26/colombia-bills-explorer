@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useCallback, useEffect } from "react";
-import api from "../../api";
+import api from "../../../api";
 
 export default function Details() {
   const { id } = useParams(); // Obtiene el ID de la URL
