@@ -1,0 +1,39 @@
+version: "3.11"
+
+services:
+  db:
+    image: postgres:15
+    container_name: colombia_bills_db
+    restart: always
+    env_file: .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: colombia_bills_backend
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    env_file: .env
+    working_dir: /app/backend
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  etl:
+    build:
+      context: .
+      dockerfile: database/Dockerfile
+    container_name: colombia_bills_etl
+    depends_on:
+      - db
+    env_file: .env
+    working_dir: /app/database
+    command: python main.py
+
+volumes:
+  db_data:
