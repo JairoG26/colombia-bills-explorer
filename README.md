@@ -1,60 +1,120 @@
-# colombia-bills-explorer
+# Prueba Técnica – Proyectos de Ley de Colombia
 
-## Parte 1: Configuración inicial, creación de la base de datos y carga de datos
+## Descripción
+Este proyecto extrae datos públicos de proyectos de ley en Colombia por medio de scraping, los normaliza y los expone mediante una API REST en FastAPI. Además, cuenta con un frontend sencillo en React para consultar los registros y ver detalles de cada proyecto.
 
-Este parte implementa un pipeline **ETL (Extract, Transform, Load)** en Python para cargar y normalizar información de proyectos de ley de Colombia en una base de datos **PostgreSQL**.  
+Los datos utilizados se encuentran en la siguiente página: https://www.camara.gov.co/secretaria/proyectos-de-ley#menu
 
-### Requisitos previos
+---
 
-Antes de ejecutar el proyecto, asegúrate de tener instalado:
+## Estructura del Proyecto
 
-- Python **3.9+**
-- PostgreSQL **14+**
-- pgAdmin (opcional, pero recomendado para ejecutar scripts y explorar datos)
-- Un entorno virtual de Python (recomendado con venv)
+- database: Scripts de extracción y transformación de datos.
+    * db: Estructura de la base de datos.
+    * ETL: Scripts de extracción, transformación y carga de datos.
+    * notebooks: Jupyter notebooks con pruebas de extracciones más complejas.
+    * data: Datos extraidos con los notebooks.
 
-### 1. Crear la base de datos en PostgreSQL
 
-1. Abre pgAdmin o conéctate desde terminal a tu servidor PostgreSQL.
+## Requisitos
 
-2. Crea una nueva base de datos llamada: colombia_bills_explorer
+- Docker y Docker Compose
+- Python 3.11+
+- Node.js y npm (para frontend)
 
-### 2. Crear las tablas con schema.sql
+---
 
-1. Abre pgAdmin y selecciona la base de datos colombia_bills_explorer.
+## Ejecución con Docker Compose
 
-2. Ve a Tools > Query Tool.
+1. Levantar contenedores:
 
-3. Carga el archivo ETL/db/schema.sql.
+```bash
+docker-compose up --build
+```
+2. Esto levantará:
 
-4. Ejecuta el script con el botón ▶️ o presiona F5.
+- PostgreSQL en localhost:5432
 
-### 3. Cargar datos
+- FastAPI en http://localhost:8000
 
-1. Crear un entorno virtual (recomendado):
+3. La primera ejecución del ETL (contenedor etl) carga los datos automáticamente a la base de datos.
 
-En Windows (PowerShell):
+## API Endpoints
 
-    python -m venv venv
-    .\venv\Scripts\Activate
+1. Listar todos los proyectos:
 
-2. instalar dependencias:
+```bash
+GET /proyectos/
+```
 
-En Windows:
+Consultar proyecto por ID:
 
-    pip install -r requirements.txt
+```bash
+GET /proyectos/{id}
+```
 
-3. Configurar las variables de conexión en un archivo .env en la raíz del proyecto:
+Filtrar por palabra clave:
 
-En el archivo .env
+```bash
+GET /proyectos/?keyword=palabra
+```
 
-    DB_URI = "postgresql://username:password@host:port/database-name"
-    BASE_URL = "https://www.camara.gov.co/secretaria/proyectos-de-ley#menu"
+## Frontend
 
-4. Ejecutar el script principal para cargar datos:
+- Interfaz sencilla en React:
 
-En Windows:
+    * Tabla con todos los proyectos
 
-    python main.py
+    * Buscador por palabra clave
 
-## Parte 2: API REST con FastAPI
+    * Ver detalles de un proyecto seleccionado
+
+- Para correrlo:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Diseño y Consideraciones
+
+- ETL: Extrae los datos desde una fuente pública, los normaliza y los guarda en Postgres.
+
+- API: FastAPI con endpoints REST para consultar y filtrar datos.
+
+- Frontend: React, consulta la API y muestra los datos en tabla y detalle.
+
+- Docker: Contenedores independientes para DB, backend y frontend para ejecución rápida y replicable.
+
+- Filtros: Palabra clave en título y rango de fechas.
+
+## Uso de IA
+
+Se utilizó ChatGPT para:
+
+- Generar la estructura inicial de FastAPI y endpoints.
+
+- Asesoría sobre configuración de Docker Compose.
+
+- Mejoras visuales con tailwindcss.
+
+El código final fue adaptado manualmente y es totalmente entendible y mantenible.
+
+## Capturas de pantalla
+
+- Menú principal:
+
+![Menú principal](./assets/main_menu.png)
+
+- Listado de proyectos de ley:
+
+![Menú principal](./assets/table.png)
+
+- Filtro de busqueda por título:
+
+![Menú principal](./assets/search.png)
+
+- Detalle de un proyecto de ley:
+
+![Menú principal](./assets/detail.png)

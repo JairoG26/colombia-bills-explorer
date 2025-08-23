@@ -2,38 +2,46 @@ version: "3.11"
 
 services:
   db:
-    image: postgres:15
+    image: postgres:14
     container_name: colombia_bills_db
     restart: always
-    env_file: .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
 
   backend:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: colombia_bills_backend
+    restart: always
     depends_on:
       - db
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      DB_URI: ${DB_URI}
+      BASE_URL: ${BASE_URL}
     ports:
       - "8000:8000"
-    env_file: .env
-    working_dir: /app/backend
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
   etl:
     build:
-      context: .
-      dockerfile: database/Dockerfile
+      context: ./database
+      dockerfile: Dockerfile
     container_name: colombia_bills_etl
     depends_on:
       - db
-    env_file: .env
-    working_dir: /app/database
+    environment:
+      DB_URI: ${DB_URI}
+      BASE_URL: ${BASE_URL}
     command: python main.py
 
 volumes:
-  db_data:
+  postgres_data:
