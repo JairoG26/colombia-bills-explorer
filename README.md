@@ -24,6 +24,23 @@ Los datos utilizados se encuentran en la siguiente página: https://www.camara.g
 
 ---
 
+## Configuración del entorno (.env)
+
+Antes de ejecutar el proyecto, debes crear un archivo .env en la raíz de la carpeta api/ con las siguientes variables:
+
+```bash
+# Postgres config
+POSTGRES_USER=tu_usuario
+POSTGRES_PASSWORD=tu_contraseña
+POSTGRES_DB=colombia_bills_explorer
+
+DATABASE_URL=postgresql://tu_usuario:tu_contraseña@db:5432/colombia_bills_explorer
+DB_URI=postgresql://tu_usuario:tu_contraseña@db:5432/colombia_bills_explorer
+
+# Scraper config
+BASE_URL=https://www.camara.gov.co/secretaria/proyectos-de-ley#menu
+```
+
 ## Ejecución con Docker Compose
 
 1. Levantar contenedores:
@@ -118,3 +135,11 @@ El código final fue adaptado manualmente y es totalmente entendible y mantenibl
 - Detalle de un proyecto de ley:
 
 ![Menú principal](./assets/detail.png)
+
+## Autor
+
+Jairo Garavito Correa
+
+Correo: garavitojairo6@gmail.com
+
+GitHub: JairoG26
