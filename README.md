@@ -14,6 +14,8 @@ Los datos utilizados se encuentran en la siguiente página: https://www.camara.g
     * ETL: Scripts de extracción, transformación y carga de datos.
     * notebooks: Jupyter notebooks con pruebas de extracciones más complejas.
     * data: Datos extraidos con los notebooks.
+- backend: Backend FastAPI
+- frontend: Frontend React
 
 
 ## Requisitos
