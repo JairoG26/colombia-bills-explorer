@@ -22,7 +22,7 @@ Los datos utilizados se encuentran en la siguiente página: https://www.camara.g
 
 - Docker y Docker Compose
 - Python 3.11+
-- Node.js y npm (para frontend)
+- React y npm (para frontend)
 
 ---
 
