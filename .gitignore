@@ -3,3 +3,7 @@ venv/
 
 # Python environment variables
 .env
+
+# Python bytecode files
+__pycache__/
+*.py[cod]
